@@ -7,14 +7,14 @@ import static mission2.AssembleProcess.*;
 public class Assemble {
     private static final String CLEAR_SCREEN = "\033[H\033[2J";
     private Car car;
-
+    private int assembleStep;
 
     public void startAssembleProcess() {
         Scanner sc = new Scanner(System.in);
 
         car = new Car();
 
-        int assembleStep = CarType_Question;
+        assembleStep = CarType_Question;
 
         while (true) {
             System.out.print(CLEAR_SCREEN);
@@ -26,34 +26,39 @@ public class Assemble {
 
             if (isExit(buf)) break;
 
-            int userInput;
-            try {
-                userInput = Integer.parseInt(buf);
-            } catch (NumberFormatException e) {
-                System.out.println("ERROR :: 숫자만 입력 가능");
-                delay(800);
-                continue;
-            }
-
-            if (!AssembleProcess.isValidUserInputRange(assembleStep, userInput)) {
-                delay(800);
-                continue;
-            }
-
-            if (isGoFirstStep(userInput, assembleStep)) {
-                assembleStep = CarType_Question;
-                continue;
-            }
-
-            if (isGoBackToPreviousStep(userInput, assembleStep)) {
-                assembleStep--;
-                continue;
-            }
-
-            assembleStep = assembleAndGetNextStep(assembleStep, userInput);
+            validateAndAssemble(buf);
         }
 
         sc.close();
+    }
+
+    public void validateAndAssemble(String buf) {
+        int userInput;
+
+        try {
+            userInput = Integer.parseInt(buf);
+        } catch (NumberFormatException e) {
+            System.out.println("ERROR :: 숫자만 입력 가능");
+            delay(800);
+            return;
+        }
+
+        if (!AssembleProcess.isValidUserInputRange(assembleStep, userInput)) {
+            delay(800);
+            return;
+        }
+
+        if (isGoFirstStep(userInput)) {
+            assembleStep = CarType_Question;
+            return;
+        }
+
+        if (isGoBackToPreviousStep(userInput)) {
+            assembleStep--;
+            return;
+        }
+
+        assembleStep = assembleAndGetNextStep(userInput);
     }
 
     public String getUserInput(Scanner sc) {
@@ -61,7 +66,7 @@ public class Assemble {
         return sc.nextLine().trim();
     }
 
-    public int assembleAndGetNextStep(int assembleStep, int userInput) {
+    public int assembleAndGetNextStep(int userInput) {
         switch (assembleStep) {
             case CarType_Question:
                 selectCarType(userInput);
@@ -98,11 +103,11 @@ public class Assemble {
         return assembleStep;
     }
 
-    private boolean isGoBackToPreviousStep(int userInput, int assembleStep) {
+    private boolean isGoBackToPreviousStep(int userInput) {
         return userInput == 0 && assembleStep > CarType_Question && assembleStep != Run_Test;
     }
 
-    private boolean isGoFirstStep(int userInput, int assembleStep) {
+    private boolean isGoFirstStep(int userInput) {
         return userInput == 0 && assembleStep == Run_Test;
     }
 
