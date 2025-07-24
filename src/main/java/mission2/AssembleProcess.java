@@ -16,7 +16,7 @@ public class AssembleProcess {
                 }
                 break;
             case Engine_Question:
-                if (userInput < 0 || userInput > 4) {
+                if (userInput < 1 || userInput > 4) {
                     System.out.println("ERROR :: 엔진은 1 ~ 4 범위만 선택 가능");
                     return false;
                 }
