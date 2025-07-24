@@ -61,7 +61,7 @@ public class Assemble {
         return sc.nextLine().trim();
     }
 
-    private int assembleAndGetNextStep(int assembleStep, int userInput) {
+    public int assembleAndGetNextStep(int assembleStep, int userInput) {
         switch (assembleStep) {
             case CarType_Question:
                 selectCarType(userInput);

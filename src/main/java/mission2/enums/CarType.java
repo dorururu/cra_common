@@ -11,10 +11,6 @@ public enum CarType {
         this.code = code;
     }
 
-    public int getCode() {
-        return code;
-    }
-
     public static CarType fromCode(int code) {
         for (CarType type : values()) {
             if (type.code == code) {

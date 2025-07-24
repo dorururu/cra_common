@@ -11,10 +11,6 @@ public enum BrakeSystem {
         this.code = code;
     }
 
-    public int getCode() {
-        return code;
-    }
-
     public static BrakeSystem fromCode(int code) {
         for (BrakeSystem brakeSystem : values()) {
             if (brakeSystem.code == code) {

@@ -12,10 +12,6 @@ public enum Engine {
         this.code = code;
     }
 
-    public int getCode() {
-        return code;
-    }
-
     public static Engine fromCode(int code) {
         for (Engine engine : values()) {
             if (engine.code == code) {

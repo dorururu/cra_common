@@ -10,10 +10,6 @@ public enum SteeringSystem {
         this.code = code;
     }
 
-    public int getCode() {
-        return code;
-    }
-
     public static SteeringSystem fromCode(int code) {
         for (SteeringSystem steeringSystem : values()) {
             if (steeringSystem.code == code) {
