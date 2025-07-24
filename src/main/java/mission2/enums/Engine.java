@@ -3,7 +3,8 @@ package mission2.enums;
 public enum Engine {
     GM(1),
     TOYOTA(2),
-    WIA(3);
+    WIA(3),
+    WRONG(4);
 
     private final int code;
 

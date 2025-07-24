@@ -1,19 +1,16 @@
 package mission2;
 
+import mission2.enums.BrakeSystem;
+import mission2.enums.CarType;
+import mission2.enums.Engine;
+import mission2.enums.SteeringSystem;
+
 import java.util.Scanner;
 
 import static mission2.AssembleStep.*;
 
 public class Assemble {
     private static final String CLEAR_SCREEN = "\033[H\033[2J";
-
-    private static final int SEDAN = 1, SUV = 2, TRUCK = 3;
-    private static final int GM = 1, TOYOTA = 2, WIA = 3;
-    private static final int MANDO = 1, CONTINENTAL = 2, BOSCH_B = 3;
-    private static final int BOSCH_S = 1, MOBIS = 2;
-
-    private static int[] userInputArray = new int[5];
-
     private Car car;
 
 
@@ -159,32 +156,28 @@ public class Assemble {
     }
 
     private void selectCarType(int userInput) {
-        userInputArray[CarType_Question] = userInput;
-        System.out.printf("차량 타입으로 %s을 선택하셨습니다.\n", userInput == 1 ? "Sedan" : userInput == 2 ? "SUV" : "Truck");
+        car.setCarType(userInput);
+        System.out.printf("차량 타입으로 %s을 선택하셨습니다.\n", car.getCarType().name());
     }
-    private void selectEngine(int a) {
-        userInputArray[Engine_Question] = a;
-        String name = a == 1 ? "GM" : a == 2 ? "TOYOTA" : a == 3 ? "WIA" : "고장난 엔진";
-        System.out.printf("%s 엔진을 선택하셨습니다.\n", name);
+    private void selectEngine(int userInput) {
+        car.setEngine(userInput);
+        System.out.printf("%s 엔진을 선택하셨습니다.\n", car.getEngine().name());
     }
-    private void selectBrakeSystem(int a) {
-        userInputArray[BrakeSystem_Question] = a;
-        String name = a == 1 ? "MANDO" : a == 2 ? "CONTINENTAL" : "BOSCH";
-        System.out.printf("%s 제동장치를 선택하셨습니다.\n", name);
+    private void selectBrakeSystem(int userInput) {
+        car.setBreakSystem(userInput);
+        System.out.printf("%s 제동장치를 선택하셨습니다.\n", car.getBrakeSystem().name());
     }
-    private void selectSteeringSystem(int a) {
-        userInputArray[SteeringSystem_Question] = a;
-        String name = a == 1 ? "BOSCH" : "MOBIS";
-        System.out.printf("%s 조향장치를 선택하셨습니다.\n", name);
+    private void selectSteeringSystem(int userInput) {
+        car.setSteeringSystem(userInput);
+        System.out.printf("%s 조향장치를 선택하셨습니다.\n", car.getSteeringSystem().name());
     }
-
 
     private boolean isValidCheck() {
-        if (userInputArray[CarType_Question] == SEDAN && userInputArray[BrakeSystem_Question] == CONTINENTAL) return false;
-        if (userInputArray[CarType_Question] == SUV   && userInputArray[Engine_Question] == TOYOTA)       return false;
-        if (userInputArray[CarType_Question] == TRUCK && userInputArray[Engine_Question] == WIA)          return false;
-        if (userInputArray[CarType_Question] == TRUCK && userInputArray[BrakeSystem_Question] == MANDO)  return false;
-        if (userInputArray[BrakeSystem_Question] == BOSCH_B && userInputArray[SteeringSystem_Question] != BOSCH_S) return false;
+        if (car.getCarType().equals(CarType.SEDAN) && car.getBrakeSystem().equals(BrakeSystem.CONTINENTAL)) return false;
+        if (car.getCarType().equals(CarType.SUV)   && car.getEngine().equals(Engine.TOYOTA))       return false;
+        if (car.getCarType().equals(CarType.TRUCK) && car.getEngine().equals(Engine.WIA))          return false;
+        if (car.getCarType().equals(CarType.TRUCK) && car.getBrakeSystem().equals(BrakeSystem.MANDO))  return false;
+        if (car.getBrakeSystem().equals(BrakeSystem.BOSCH_B) && !car.getSteeringSystem().equals(SteeringSystem.BOSCH_S)) return false;
         return true;
     }
 
@@ -193,34 +186,29 @@ public class Assemble {
             System.out.println("자동차가 동작되지 않습니다");
             return;
         }
-        if (userInputArray[Engine_Question] == 4) {
+        if (car.getEngine().equals(Engine.WRONG)) {
             System.out.println("엔진이 고장나있습니다.");
             System.out.println("자동차가 움직이지 않습니다.");
             return;
         }
 
-        String[] carNames = {"", "Sedan", "SUV", "Truck"};
-        String[] engNames = {"", "GM", "TOYOTA", "WIA"};
-        System.out.printf("Car Type : %s\n", carNames[userInputArray[CarType_Question]]);
-        System.out.printf("Engine   : %s\n", engNames[userInputArray[Engine_Question]]);
-        System.out.printf("Brake    : %s\n",
-                userInputArray[BrakeSystem_Question]==1? "Mando":
-                        userInputArray[BrakeSystem_Question]==2? "Continental":"Bosch");
-        System.out.printf("Steering : %s\n",
-                userInputArray[SteeringSystem_Question]==1? "Bosch":"Mobis");
+        System.out.printf("Car Type : %s\n", car.getCarType().name());
+        System.out.printf("Engine   : %s\n", car.getEngine().name());
+        System.out.printf("Brake    : %s\n", car.getBrakeSystem().name());
+        System.out.printf("Steering : %s\n", car.getSteeringSystem().name());
         System.out.println("자동차가 동작됩니다.");
     }
 
     private void testProducedCar() {
-        if (userInputArray[CarType_Question] == SEDAN && userInputArray[BrakeSystem_Question] == CONTINENTAL) {
+        if (car.getCarType().equals(CarType.SEDAN) && car.getBrakeSystem().equals(BrakeSystem.CONTINENTAL)) {
             fail("Sedan에는 Continental제동장치 사용 불가");
-        } else if (userInputArray[CarType_Question] == SUV && userInputArray[Engine_Question] == TOYOTA) {
+        } else if (car.getCarType().equals(CarType.SUV) && car.getEngine().equals(Engine.TOYOTA)) {
             fail("SUV에는 TOYOTA엔진 사용 불가");
-        } else if (userInputArray[CarType_Question] == TRUCK && userInputArray[Engine_Question] == WIA) {
+        } else if (car.getCarType().equals(CarType.TRUCK) && car.getEngine().equals(Engine.WIA)) {
             fail("Truck에는 WIA엔진 사용 불가");
-        } else if (userInputArray[CarType_Question] == TRUCK && userInputArray[BrakeSystem_Question] == MANDO) {
+        } else if (car.getCarType().equals(CarType.TRUCK) && car.getBrakeSystem().equals(BrakeSystem.MANDO)) {
             fail("Truck에는 Mando제동장치 사용 불가");
-        } else if (userInputArray[BrakeSystem_Question] == BOSCH_B && userInputArray[SteeringSystem_Question] != BOSCH_S) {
+        } else if (car.getBrakeSystem().equals(BrakeSystem.BOSCH_B) && !car.getSteeringSystem().equals(SteeringSystem.BOSCH_S)) {
             fail("Bosch제동장치에는 Bosch조향장치 이외 사용 불가");
         } else {
             System.out.println("자동차 부품 조합 테스트 결과 : PASS");

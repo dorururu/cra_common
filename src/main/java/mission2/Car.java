@@ -15,15 +15,31 @@ public class Car {
         this.carType = CarType.fromCode(input);
     }
 
-    private void setEngine(int input) {
+    public void setEngine(int input) {
         this.engine = Engine.fromCode(input);
     }
 
-    private void setBreakSystem(int input) {
+    public void setBreakSystem(int input) {
         this.brakeSystem = BrakeSystem.fromCode(input);
     }
 
-    private void setSteeringSystem(int input) {
+    public void setSteeringSystem(int input) {
         this.steeringSystem = SteeringSystem.fromCode(input);
+    }
+
+    public CarType getCarType() {
+        return carType;
+    }
+
+    public Engine getEngine() {
+        return engine;
+    }
+
+    public BrakeSystem getBrakeSystem() {
+        return brakeSystem;
+    }
+
+    public SteeringSystem getSteeringSystem() {
+        return steeringSystem;
     }
 }
