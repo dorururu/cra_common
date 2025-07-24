@@ -58,7 +58,7 @@ public class AssembleService {
             return;
         }
 
-        assembleStep = assembleAndGetNextStep(userInput);
+        assembleAndGetNextStep(userInput);
     }
 
     public String getUserInput(Scanner sc) {
@@ -66,7 +66,7 @@ public class AssembleService {
         return sc.nextLine().trim();
     }
 
-    public int assembleAndGetNextStep(int userInput) {
+    public void assembleAndGetNextStep(int userInput) {
         switch (assembleStep) {
             case CarType_Question:
                 selectCarType(userInput);
@@ -100,7 +100,6 @@ public class AssembleService {
                 }
                 break;
         }
-        return assembleStep;
     }
 
     private boolean isGoBackToPreviousStep(int userInput) {
