@@ -20,24 +20,13 @@ public class Assemble {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int step = CarType_Q;
+        int assembleStep = CarType_Q;
 
         while (true) {
             System.out.print(CLEAR_SCREEN);
             System.out.flush();
 
-            switch (step) {
-                case CarType_Q:
-                    showCarTypeMenu(); break;
-                case Engine_Q:
-                    showEngineMenu(); break;
-                case BrakeSystem_Q:
-                    showBrakeMenu(); break;
-                case SteeringSystem_Q:
-                    showSteeringMenu(); break;
-                case Run_Test:
-                    showRunTestMenu(); break;
-            }
+            showMenuByAssembleStep(assembleStep);
 
             System.out.print("INPUT > ");
             String buf = sc.nextLine().trim();
@@ -56,40 +45,40 @@ public class Assemble {
                 continue;
             }
 
-            if (!isValidRange(step, answer)) {
+            if (!isValidRange(assembleStep, answer)) {
                 delay(800);
                 continue;
             }
 
             if (answer == 0) {
-                if (step == Run_Test) {
-                    step = CarType_Q;
-                } else if (step > CarType_Q) {
-                    step--;
+                if (assembleStep == Run_Test) {
+                    assembleStep = CarType_Q;
+                } else if (assembleStep > CarType_Q) {
+                    assembleStep--;
                 }
                 continue;
             }
 
-            switch (step) {
+            switch (assembleStep) {
                 case CarType_Q:
                     selectCarType(answer);
                     delay(800);
-                    step = Engine_Q;
+                    assembleStep = Engine_Q;
                     break;
                 case Engine_Q:
                     selectEngine(answer);
                     delay(800);
-                    step = BrakeSystem_Q;
+                    assembleStep = BrakeSystem_Q;
                     break;
                 case BrakeSystem_Q:
                     selectBrakeSystem(answer);
                     delay(800);
-                    step = SteeringSystem_Q;
+                    assembleStep = SteeringSystem_Q;
                     break;
                 case SteeringSystem_Q:
                     selectSteeringSystem(answer);
                     delay(800);
-                    step = Run_Test;
+                    assembleStep = Run_Test;
                     break;
                 case Run_Test:
                     if (answer == 1) {
@@ -106,6 +95,21 @@ public class Assemble {
         }
 
         sc.close();
+    }
+
+    private static void showMenuByAssembleStep(int assembleStep) {
+        switch (assembleStep) {
+            case CarType_Q:
+                showCarTypeMenu(); break;
+            case Engine_Q:
+                showEngineMenu(); break;
+            case BrakeSystem_Q:
+                showBrakeMenu(); break;
+            case SteeringSystem_Q:
+                showSteeringMenu(); break;
+            case Run_Test:
+                showRunTestMenu(); break;
+        }
     }
 
     private static void showCarTypeMenu() {
