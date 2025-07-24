@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 import static mission2.AssembleProcess.*;
 
-public class Assemble {
+public class AssembleService {
     private static final String CLEAR_SCREEN = "\033[H\033[2J";
     private Car car;
     private int assembleStep;
