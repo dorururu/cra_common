@@ -19,14 +19,14 @@ public class Assemble {
     private static int[] userInputArray = new int[5];
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-
-        startAssemble(CarType_Question, sc);
-
-        sc.close();
+        startAssembleProcess();
     }
 
-    private static void startAssemble(int assembleStep, Scanner sc) {
+    private static void startAssembleProcess() {
+        Scanner sc = new Scanner(System.in);
+
+        int assembleStep = CarType_Question;
+
         while (true) {
             System.out.print(CLEAR_SCREEN);
             System.out.flush();
@@ -62,40 +62,47 @@ public class Assemble {
                 continue;
             }
 
-            switch (assembleStep) {
-                case CarType_Question:
-                    selectCarType(userInput);
-                    delay(800);
-                    assembleStep = Engine_Question;
-                    break;
-                case Engine_Question:
-                    selectEngine(userInput);
-                    delay(800);
-                    assembleStep = BrakeSystem_Question;
-                    break;
-                case BrakeSystem_Question:
-                    selectBrakeSystem(userInput);
-                    delay(800);
-                    assembleStep = SteeringSystem_Question;
-                    break;
-                case SteeringSystem_Question:
-                    selectSteeringSystem(userInput);
-                    delay(800);
-                    assembleStep = Run_Test;
-                    break;
-                case Run_Test:
-                    if (userInput == 1) {
-                        runProducedCar();
-                        delay(2000);
-                    } else if (userInput == 2) {
-                        System.out.println("Test...");
-                        delay(1500);
-                        testProducedCar();
-                        delay(2000);
-                    }
-                    break;
-            }
+            assembleStep = assembleAndGetNextStep(assembleStep, userInput);
         }
+
+        sc.close();
+    }
+
+    private static int assembleAndGetNextStep(int assembleStep, int userInput) {
+        switch (assembleStep) {
+            case CarType_Question:
+                selectCarType(userInput);
+                delay(800);
+                assembleStep = Engine_Question;
+                break;
+            case Engine_Question:
+                selectEngine(userInput);
+                delay(800);
+                assembleStep = BrakeSystem_Question;
+                break;
+            case BrakeSystem_Question:
+                selectBrakeSystem(userInput);
+                delay(800);
+                assembleStep = SteeringSystem_Question;
+                break;
+            case SteeringSystem_Question:
+                selectSteeringSystem(userInput);
+                delay(800);
+                assembleStep = Run_Test;
+                break;
+            case Run_Test:
+                if (userInput == 1) {
+                    runProducedCar();
+                    delay(2000);
+                } else if (userInput == 2) {
+                    System.out.println("Test...");
+                    delay(1500);
+                    testProducedCar();
+                    delay(2000);
+                }
+                break;
+        }
+        return assembleStep;
     }
 
     private static boolean isGoBackToPreviousStep(int userInput, int assembleStep) {
