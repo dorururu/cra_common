@@ -1,10 +1,5 @@
 package mission2;
 
-import mission2.enums.BrakeSystem;
-import mission2.enums.CarType;
-import mission2.enums.Engine;
-import mission2.enums.SteeringSystem;
-
 import java.util.Scanner;
 
 import static mission2.AssembleProcess.*;
@@ -90,12 +85,12 @@ public class Assemble {
                 break;
             case Run_Test:
                 if (userInput == 1) {
-                    runProducedCar();
+                    car.run();
                     delay(2000);
                 } else if (userInput == 2) {
                     System.out.println("Test...");
                     delay(1500);
-                    testProducedCar();
+                    car.test();
                     delay(2000);
                 }
                 break;
@@ -135,55 +130,6 @@ public class Assemble {
         car.setSteeringSystem(userInput);
         System.out.printf("%s 조향장치를 선택하셨습니다.\n", car.getSteeringSystem().name());
     }
-
-    private boolean isValidCheck() {
-        if (car.getCarType().equals(CarType.SEDAN) && car.getBrakeSystem().equals(BrakeSystem.CONTINENTAL)) return false;
-        if (car.getCarType().equals(CarType.SUV)   && car.getEngine().equals(Engine.TOYOTA))       return false;
-        if (car.getCarType().equals(CarType.TRUCK) && car.getEngine().equals(Engine.WIA))          return false;
-        if (car.getCarType().equals(CarType.TRUCK) && car.getBrakeSystem().equals(BrakeSystem.MANDO))  return false;
-        if (car.getBrakeSystem().equals(BrakeSystem.BOSCH_B) && !car.getSteeringSystem().equals(SteeringSystem.BOSCH_S)) return false;
-        return true;
-    }
-
-    private void runProducedCar() {
-        if (!isValidCheck()) {
-            System.out.println("자동차가 동작되지 않습니다");
-            return;
-        }
-        if (car.getEngine().equals(Engine.WRONG)) {
-            System.out.println("엔진이 고장나있습니다.");
-            System.out.println("자동차가 움직이지 않습니다.");
-            return;
-        }
-
-        System.out.printf("Car Type : %s\n", car.getCarType().name());
-        System.out.printf("Engine   : %s\n", car.getEngine().name());
-        System.out.printf("Brake    : %s\n", car.getBrakeSystem().name());
-        System.out.printf("Steering : %s\n", car.getSteeringSystem().name());
-        System.out.println("자동차가 동작됩니다.");
-    }
-
-    private void testProducedCar() {
-        if (car.getCarType().equals(CarType.SEDAN) && car.getBrakeSystem().equals(BrakeSystem.CONTINENTAL)) {
-            fail("Sedan에는 Continental제동장치 사용 불가");
-        } else if (car.getCarType().equals(CarType.SUV) && car.getEngine().equals(Engine.TOYOTA)) {
-            fail("SUV에는 TOYOTA엔진 사용 불가");
-        } else if (car.getCarType().equals(CarType.TRUCK) && car.getEngine().equals(Engine.WIA)) {
-            fail("Truck에는 WIA엔진 사용 불가");
-        } else if (car.getCarType().equals(CarType.TRUCK) && car.getBrakeSystem().equals(BrakeSystem.MANDO)) {
-            fail("Truck에는 Mando제동장치 사용 불가");
-        } else if (car.getBrakeSystem().equals(BrakeSystem.BOSCH_B) && !car.getSteeringSystem().equals(SteeringSystem.BOSCH_S)) {
-            fail("Bosch제동장치에는 Bosch조향장치 이외 사용 불가");
-        } else {
-            System.out.println("자동차 부품 조합 테스트 결과 : PASS");
-        }
-    }
-
-    private void fail(String msg) {
-        System.out.println("자동차 부품 조합 테스트 결과 : FAIL");
-        System.out.println(msg);
-    }
-
 
     private void delay(int ms) {
         try {
