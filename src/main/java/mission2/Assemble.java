@@ -14,8 +14,13 @@ public class Assemble {
 
     private static int[] userInputArray = new int[5];
 
+    private Car car;
+
+
     public void startAssembleProcess() {
         Scanner sc = new Scanner(System.in);
+
+        car = new Car();
 
         int assembleStep = CarType_Question;
 
@@ -116,8 +121,6 @@ public class Assemble {
         }
         return false;
     }
-
-
 
     private boolean isValidUserInputRange(int step, int ans) {
         switch (step) {

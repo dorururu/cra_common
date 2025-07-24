@@ -10,4 +10,20 @@ public class Car {
     private Engine engine;
     private BrakeSystem brakeSystem;
     private SteeringSystem steeringSystem;
+
+    public void setCarType(int input) {
+        this.carType = CarType.fromCode(input);
+    }
+
+    private void setEngine(int input) {
+        this.engine = Engine.fromCode(input);
+    }
+
+    private void setBreakSystem(int input) {
+        this.brakeSystem = BrakeSystem.fromCode(input);
+    }
+
+    private void setSteeringSystem(int input) {
+        this.steeringSystem = SteeringSystem.fromCode(input);
+    }
 }
