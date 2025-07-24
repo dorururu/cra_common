@@ -1,11 +1,47 @@
 package mission2;
 
-public class AssembleStep {
+public class AssembleProcess {
     public static final int CarType_Question = 0;
     public static final int Engine_Question = 1;
     public static final int BrakeSystem_Question = 2;
     public static final int SteeringSystem_Question = 3;
     public static final int Run_Test       = 4;
+
+    public static boolean isValidUserInputRange(int step, int userInput) {
+        switch (step) {
+            case CarType_Question:
+                if (userInput < 1 || userInput > 3) {
+                    System.out.println("ERROR :: 차량 타입은 1 ~ 3 범위만 선택 가능");
+                    return false;
+                }
+                break;
+            case Engine_Question:
+                if (userInput < 0 || userInput > 4) {
+                    System.out.println("ERROR :: 엔진은 1 ~ 4 범위만 선택 가능");
+                    return false;
+                }
+                break;
+            case BrakeSystem_Question:
+                if (userInput < 0 || userInput > 3) {
+                    System.out.println("ERROR :: 제동장치는 1 ~ 3 범위만 선택 가능");
+                    return false;
+                }
+                break;
+            case SteeringSystem_Question:
+                if (userInput < 0 || userInput > 2) {
+                    System.out.println("ERROR :: 조향장치는 1 ~ 2 범위만 선택 가능");
+                    return false;
+                }
+                break;
+            case Run_Test:
+                if (userInput < 0 || userInput > 2) {
+                    System.out.println("ERROR :: Run 또는 Test 중 하나를 선택 필요");
+                    return false;
+                }
+                break;
+        }
+        return true;
+    }
 
     public static void showMenu(int assembleStep) {
         switch (assembleStep) {

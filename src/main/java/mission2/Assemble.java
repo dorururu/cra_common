@@ -7,7 +7,7 @@ import mission2.enums.SteeringSystem;
 
 import java.util.Scanner;
 
-import static mission2.AssembleStep.*;
+import static mission2.AssembleProcess.*;
 
 public class Assemble {
     private static final String CLEAR_SCREEN = "\033[H\033[2J";
@@ -25,7 +25,7 @@ public class Assemble {
             System.out.print(CLEAR_SCREEN);
             System.out.flush();
 
-            AssembleStep.showMenu(assembleStep);
+            AssembleProcess.showMenu(assembleStep);
 
             String buf = getUserInput(sc);
 
@@ -40,7 +40,7 @@ public class Assemble {
                 continue;
             }
 
-            if (!isValidUserInputRange(assembleStep, userInput)) {
+            if (!AssembleProcess.isValidUserInputRange(assembleStep, userInput)) {
                 delay(800);
                 continue;
             }
@@ -104,7 +104,7 @@ public class Assemble {
     }
 
     private boolean isGoBackToPreviousStep(int userInput, int assembleStep) {
-        return userInput == 0 && assembleStep > CarType_Question;
+        return userInput == 0 && assembleStep > CarType_Question && assembleStep != Run_Test;
     }
 
     private boolean isGoFirstStep(int userInput, int assembleStep) {
@@ -117,42 +117,6 @@ public class Assemble {
             return true;
         }
         return false;
-    }
-
-    private boolean isValidUserInputRange(int step, int ans) {
-        switch (step) {
-            case CarType_Question:
-                if (ans < 1 || ans > 3) {
-                    System.out.println("ERROR :: 차량 타입은 1 ~ 3 범위만 선택 가능");
-                    return false;
-                }
-                break;
-            case Engine_Question:
-                if (ans < 0 || ans > 4) {
-                    System.out.println("ERROR :: 엔진은 1 ~ 4 범위만 선택 가능");
-                    return false;
-                }
-                break;
-            case BrakeSystem_Question:
-                if (ans < 0 || ans > 3) {
-                    System.out.println("ERROR :: 제동장치는 1 ~ 3 범위만 선택 가능");
-                    return false;
-                }
-                break;
-            case SteeringSystem_Question:
-                if (ans < 0 || ans > 2) {
-                    System.out.println("ERROR :: 조향장치는 1 ~ 2 범위만 선택 가능");
-                    return false;
-                }
-                break;
-            case Run_Test:
-                if (ans < 0 || ans > 2) {
-                    System.out.println("ERROR :: Run 또는 Test 중 하나를 선택 필요");
-                    return false;
-                }
-                break;
-        }
-        return true;
     }
 
     private void selectCarType(int userInput) {
