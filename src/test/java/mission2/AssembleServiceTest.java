@@ -26,7 +26,7 @@ class AssembleServiceTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"-1", "0", "4"})
+    @ValueSource(strings = {"-1", "4"})
     @DisplayName("CarType 선택할때 input은 1~3사이여야 assemble 진행 가능")
     void carType_input_should_be_1_3_fail(String userInput) {
         AssembleService assembleService = new AssembleService();
@@ -37,7 +37,7 @@ class AssembleServiceTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = { "0", "5"})
+    @ValueSource(strings = { "-1", "5"})
     @DisplayName("Engine 선택할때 input은 1~4사이여야 assemble 진행 가능")
     void engine_input_should_be_1_4_fail(String userInput) {
         AssembleService assembleService = new AssembleService();
@@ -48,7 +48,7 @@ class AssembleServiceTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = { "-1", "0", "4"})
+    @ValueSource(strings = { "-1", "4"})
     @DisplayName("BreakSystem 선택할때 input은 1~3사이여야 assemble 진행 가능")
     void breaksystem_input_should_be_1_4_fail(String userInput) {
         AssembleService assembleService = new AssembleService();
@@ -59,7 +59,7 @@ class AssembleServiceTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = { "-1", "0", "3"})
+    @ValueSource(strings = { "-1", "4"})
     @DisplayName("SteeringSystem_Question 선택할때 input은 1~3사이여야 assemble 진행 가능")
     void steeringsystem_input_should_be_1_4_fail(String userInput) {
         AssembleService assembleService = new AssembleService();
@@ -77,6 +77,17 @@ class AssembleServiceTest {
         int result = assembleService.validateAndAssemble("0", Run_Test);
 
         assertEquals(CarType_Question, result);
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = { 1, 2, 3})
+    @DisplayName("step 이 1, 2, 3일때 0을 입력받으면 입력받으면 이전 스텝으로 돌아간다")
+    void go_back_first_step_success(int step) {
+        AssembleService assembleService = new AssembleService();
+
+        int result = assembleService.validateAndAssemble("0", step);
+
+        assertEquals(step - 1, result);
     }
 
 
