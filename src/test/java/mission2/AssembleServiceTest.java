@@ -69,5 +69,16 @@ class AssembleServiceTest {
         assertEquals(SteeringSystem_Question, result);
     }
 
+    @Test
+    @DisplayName("Run Test 후 0을 받으면 처음으로 돌아간다")
+    void go_back_first_step_success() {
+        AssembleService assembleService = new AssembleService();
+
+        int result = assembleService.validateAndAssemble("0", Run_Test);
+
+        assertEquals(CarType_Question, result);
+    }
+
+
 
 }
