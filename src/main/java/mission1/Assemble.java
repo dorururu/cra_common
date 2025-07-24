@@ -33,8 +33,7 @@ public class Assemble {
 
             showMenuByAssembleStep(assembleStep);
 
-            System.out.print("INPUT > ");
-            String buf = sc.nextLine().trim();
+            String buf = getUserInput(sc);
 
             if (isExit(buf)) break;
 
@@ -66,6 +65,11 @@ public class Assemble {
         }
 
         sc.close();
+    }
+
+    public static String getUserInput(Scanner sc) {
+        System.out.print("INPUT > ");
+        return sc.nextLine().trim();
     }
 
     private static int assembleAndGetNextStep(int assembleStep, int userInput) {
