@@ -20,8 +20,13 @@ public class Assemble {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int assembleStep = CarType_Question;
 
+        startAssemble(CarType_Question, sc);
+
+        sc.close();
+    }
+
+    private static void startAssemble(int assembleStep, Scanner sc) {
         while (true) {
             System.out.print(CLEAR_SCREEN);
             System.out.flush();
@@ -91,8 +96,6 @@ public class Assemble {
                     break;
             }
         }
-
-        sc.close();
     }
 
     private static boolean isGoBackToPreviousStep(int userInput, int assembleStep) {
